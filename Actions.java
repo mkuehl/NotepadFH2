@@ -120,6 +120,30 @@ class  Actions {
     }
 
 	
+    //to cut the selected text
+    public void cut  () {
+        n.getTextComponent().cut();
+    }
+
+	
+    //to copy the selected text
+    public void copy  () {
+        n.getTextComponent().copy();
+    }
+
+	
+    //to paste the selected text
+    public void paste  () {
+        n.getTextComponent().paste();
+    }
+
+	
+    //to select all the text
+    public void selectAll  () {
+        n.getTextComponent().selectAll();
+    }
+
+	
     //declaration of the private variables used in the program
     private String findWord  ;
 
@@ -241,18 +265,6 @@ class  Actions {
             System.err.println( "I/O Error on Save" );
         }
         n.setTitle( jfc.getSelectedFile().getName() + " - JAVA Notepad" );
-    }
-
-	
-    //to copy the selected text
-    public void copy() {
-        n.getTextComponent().copy();
-    }
-
-	
-    //to cut the selected text
-    public void cut() {
-        n.getTextComponent().cut();
     }
 
 	
@@ -413,12 +425,6 @@ class  Actions {
     }
 
 	
-    //to paste the selected text
-    public void paste() {
-        n.getTextComponent().paste();
-    }
-
-	
     /**
      *THIS IS FOR SAVE ACTION, SaveAs ACTION has saveAs() method
      *If we want to save a new text, then we want to know 
@@ -480,12 +486,6 @@ class  Actions {
             }
         }
         n.setTitle( jfc.getSelectedFile().getName() + " - JAVA Notepad" );
-    }
-
-	
-    //to select all the text
-    public void selectAll() {
-        n.getTextComponent().selectAll();
     }
 
 	
