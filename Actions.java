@@ -120,6 +120,16 @@ class  Actions {
     }
 
 	
+    /**
+     *THIS FROM SUN WEBSITE (@Print.java)
+     *if we want to print the text, we can do this by print method
+     */
+    public void print  () {
+        //import printer class
+        Print.printComponent( n.getTextComponent() );
+    }
+
+	
     private String fileContent = null;
 
 	 //to get the text from the text area
@@ -400,16 +410,6 @@ class  Actions {
     //to paste the selected text
     public void paste() {
         n.getTextComponent().paste();
-    }
-
-	
-    /**
-     *THIS FROM SUN WEBSITE (@Print.java)
-     *if we want to print the text, we can do this by print method
-     */
-    public void print() {
-        //import printer class
-        Print.printComponent( n.getTextComponent() );
     }
 
 	

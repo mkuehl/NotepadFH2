@@ -59,6 +59,13 @@ class  Notepad  extends JFrame {
     }
 
 	
+	 private JMenu  buildFileMenu__wrappee__Base  () {
+		JMenu fileMenu   = new JMenu("File");
+		fileMenu.setMnemonic('f');
+		return fileMenu;
+	}
+
+	
     protected JMenu buildFileMenu  () {
         JMenu fileMenu   = buildFileMenu$$File();
         if ( fileMenu.getItemCount() > 0 )
@@ -118,6 +125,12 @@ class  Notepad  extends JFrame {
         helpMenu.add( aboutMenuItem );
         return helpMenu;
     }
+
+	
+	 private JToolBar  buildToolBar__wrappee__Base  () {
+		JToolBar toolBar = new JToolBar("Tool Bar");
+		return toolBar;
+	}
 
 	
      private JToolBar  buildToolBar__wrappee__FullStyled  () {
