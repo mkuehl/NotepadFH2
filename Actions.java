@@ -18,6 +18,13 @@ class  Actions {
 
     public Actions  (Notepad n){
 		this.n = n;
+	
+		//filter the kind of files, we want only TXT file
+		filter.addExtension("txt");
+		//to set a description for the file (TXT)
+		filter.setDescription("TXT Documents");
+		//setting the FileFilter to JFileChooser
+		jfc.setFileFilter(filter);
 	 {
                 
             this.n = n;
@@ -31,6 +38,11 @@ class  Actions {
             jfc.setFileFilter( filter );
         }
     }
+
+	
+	 private void  exit__wrappee__Base  (){
+		System.exit(0);
+	}
 
 	
     /**
@@ -120,157 +132,16 @@ class  Actions {
     }
 
 	
-    //to cut the selected text
-    public void cut  () {
-        n.getTextComponent().cut();
-    }
-
-	
-    //to copy the selected text
-    public void copy  () {
-        n.getTextComponent().copy();
-    }
-
-	
-    //to paste the selected text
-    public void paste  () {
-        n.getTextComponent().paste();
-    }
-
-	
-    //to select all the text
-    public void selectAll  () {
-        n.getTextComponent().selectAll();
-    }
-
-	
-    //declaration of the private variables used in the program
-    private String findWord  ;
-
-	 //for searching & finding the word
-    private int findIndex  = -1;
-
-	
-    //this is a method for searching the input text from the text area
-    public void find  () {
-        try {
-            int index;
-            findWord = JOptionPane.showInputDialog( "Type the word to find" );
-            findIndex = n.getTextComponent().getText().indexOf( findWord );
-            if ( findIndex == -1 ) {
-                JOptionPane.showMessageDialog( null,"Word not found!","No match",JOptionPane.WARNING_MESSAGE );
-            }
-            else {
-                selectFound();
-            }
-        }
-        catch ( Exception ex ) {}
-    }
-
-	
-    public void findNext  () {
-        if ( findIndex == -1 )
-            return;
-        findIndex = n.getTextComponent().getText().indexOf( findWord, findIndex+1 );
-        if ( findIndex == -1 ) {
-            JOptionPane.showMessageDialog( null,"Search wrapped!","Search wrapped",JOptionPane.WARNING_MESSAGE );
-            findIndex = n.getTextComponent().getText().indexOf( findWord );
-        }
-        if ( findIndex != -1 )
-            selectFound();
-    }
-
-	
-    private void selectFound  () {
-        n.getTextComponent().grabFocus();
-        n.getTextComponent().select( findIndex, findIndex + findWord.length() );
-    }
-
-	
-    /**
-     *THIS FROM SUN WEBSITE (@Print.java)
-     *if we want to print the text, we can do this by print method
-     */
-    public void print  () {
-        //import printer class
-        Print.printComponent( n.getTextComponent() );
-    }
-
-	
-    private String fileContent = null;
+    private String fileContent  = null;
 
 	 //to get the text from the text area
-    private String fileName = null;
+    private String fileName  = null;
 
 	 //for using the name of the file
-    private JFileChooser jfc = new JFileChooser( "." );
+    private JFileChooser jfc  = new JFileChooser( "." );
 
 	 //for using a open & save dialog
-    private ExampleFileFilter filter = new ExampleFileFilter();
-
-	
-    /**
-     *THIS IS THE WAY FOR OPENING THE TEXT FILE
-     */
-    private void _open() {
-        int returnVal = jfc.showOpenDialog( n ); //to show JFileChooser
-        if( returnVal == JFileChooser.APPROVE_OPTION ) {
-            //to erase any text in the text area before adding new text
-            n.getTextComponent().setText( null );
-            try {
-                //to get the name of the selected file
-                fileName = jfc.getSelectedFile().getPath();
-                //to read the selected file 
-                Reader in = new FileReader( jfc.getSelectedFile() );
-                StringBuilder sb = new StringBuilder();
-                //100000 is the max. char can be written in the text area
-                char[] buff = new char[100000];
-                int nch;
-                while( ( nch = in.read( buff, 0, buff.length ) ) != -1 ) {
-                    sb.append( buff, 0, nch );
-                }
-                fileContent = sb.toString();
-                n.getTextComponent().setText( fileContent );
-            }
-            catch( FileNotFoundException x ) {
-            // no action
-            }
-            catch( IOException ioe ) {
-                System.err.println( "I/O Error on Open" );
-            }
-        }
-        n.setTitle( jfc.getSelectedFile().getName() + " - JAVA Notepad" );
-    }
-
-	
-    /**
-     *THIS IS THE WAY FOR SAVING THE TEXT IN THE SAME FILE
-     */
-    private void _save() {
-        //initializing 'fout' to write all text in the selected file
-        try {
-            PrintWriter fout = new PrintWriter( new FileWriter( jfc.getSelectedFile() ) );
-            //for getting the text from the text area
-            fileContent = n.getTextComponent().getText();
-            //using StringTokenizer for the 'fileContent' String
-            StringTokenizer st=new StringTokenizer( fileContent,System.getProperty( "line.separator" ) );
-            while( st.hasMoreTokens() ) {
-                //write the string (text) in the selected file
-                fout.println( st.nextToken() );
-            }
-            //closing fout
-            fout.close();
-        }
-        catch( IOException ioe ) {
-            System.err.println( "I/O Error on Save" );
-        }
-        n.setTitle( jfc.getSelectedFile().getName() + " - JAVA Notepad" );
-    }
-
-	
-    public final void exit$$Base() {
-        System.exit( 0 );
-    }
+    private ExampleFileFilter filter  = new ExampleFileFilter();
 
 	
     /**
@@ -279,7 +150,7 @@ class  Actions {
      *If the text area isn't empty & the text wasn't saved befor this time, then the program display ->
      *for the user an option for saving the text in a new file or in the same file
      */
-    public void newFile() {
+    public void newFile  () {
         /**
          *if the text area isn't empty & if the text area hasn't 
          *a text not saved befor (fileContent != null)
@@ -352,7 +223,7 @@ class  Actions {
      *then the program display for the user an option for saving the text 
      *in a new file or in the same file
      */
-    public void open() {
+    public void open  () {
         /**
          *if the text area isn't empty & if the text area hasn't a text which
          *not saved befor (fileContent != null)
@@ -455,7 +326,7 @@ class  Actions {
     /**
      *THIS IS THE WAY FOR SAVING THE TEXT IN A NEW FILE
      */    
-    public void saveAs() {
+    public void saveAs  () {
         //filter the kind of files, we want only TXT file
         filter.addExtension( "txt" );
         //to set a description for the file (TXT)
@@ -486,6 +357,147 @@ class  Actions {
             }
         }
         n.setTitle( jfc.getSelectedFile().getName() + " - JAVA Notepad" );
+    }
+
+	
+    /**
+     *THIS IS THE WAY FOR SAVING THE TEXT IN THE SAME FILE
+     */
+    private void _save  () {
+        //initializing 'fout' to write all text in the selected file
+        try {
+            PrintWriter fout = new PrintWriter( new FileWriter( jfc.getSelectedFile() ) );
+            //for getting the text from the text area
+            fileContent = n.getTextComponent().getText();
+            //using StringTokenizer for the 'fileContent' String
+            StringTokenizer st=new StringTokenizer( fileContent,System.getProperty( "line.separator" ) );
+            while( st.hasMoreTokens() ) {
+                //write the string (text) in the selected file
+                fout.println( st.nextToken() );
+            }
+            //closing fout
+            fout.close();
+        }
+        catch( IOException ioe ) {
+            System.err.println( "I/O Error on Save" );
+        }
+        n.setTitle( jfc.getSelectedFile().getName() + " - JAVA Notepad" );
+    }
+
+	
+    /**
+     *THIS IS THE WAY FOR OPENING THE TEXT FILE
+     */
+    private void _open  () {
+        int returnVal = jfc.showOpenDialog( n ); //to show JFileChooser
+        if( returnVal == JFileChooser.APPROVE_OPTION ) {
+            //to erase any text in the text area before adding new text
+            n.getTextComponent().setText( null );
+            try {
+                //to get the name of the selected file
+                fileName = jfc.getSelectedFile().getPath();
+                //to read the selected file 
+                Reader in = new FileReader( jfc.getSelectedFile() );
+                StringBuilder sb = new StringBuilder();
+                //100000 is the max. char can be written in the text area
+                char[] buff = new char[100000];
+                int nch;
+                while( ( nch = in.read( buff, 0, buff.length ) ) != -1 ) {
+                    sb.append( buff, 0, nch );
+                }
+                fileContent = sb.toString();
+                n.getTextComponent().setText( fileContent );
+            }
+            catch( FileNotFoundException x ) {
+            // no action
+            }
+            catch( IOException ioe ) {
+                System.err.println( "I/O Error on Open" );
+            }
+        }
+        n.setTitle( jfc.getSelectedFile().getName() + " - JAVA Notepad" );
+    }
+
+	
+    //to cut the selected text
+    public void cut  () {
+        n.getTextComponent().cut();
+    }
+
+	
+    //to copy the selected text
+    public void copy  () {
+        n.getTextComponent().copy();
+    }
+
+	
+    //to paste the selected text
+    public void paste  () {
+        n.getTextComponent().paste();
+    }
+
+	
+    //to select all the text
+    public void selectAll  () {
+        n.getTextComponent().selectAll();
+    }
+
+	
+    //declaration of the private variables used in the program
+    private String findWord  ;
+
+	 //for searching & finding the word
+    private int findIndex  = -1;
+
+	
+    //this is a method for searching the input text from the text area
+    public void find  () {
+        try {
+            int index;
+            findWord = JOptionPane.showInputDialog( "Type the word to find" );
+            findIndex = n.getTextComponent().getText().indexOf( findWord );
+            if ( findIndex == -1 ) {
+                JOptionPane.showMessageDialog( null,"Word not found!","No match",JOptionPane.WARNING_MESSAGE );
+            }
+            else {
+                selectFound();
+            }
+        }
+        catch ( Exception ex ) {}
+    }
+
+	
+    public void findNext  () {
+        if ( findIndex == -1 )
+            return;
+        findIndex = n.getTextComponent().getText().indexOf( findWord, findIndex+1 );
+        if ( findIndex == -1 ) {
+            JOptionPane.showMessageDialog( null,"Search wrapped!","Search wrapped",JOptionPane.WARNING_MESSAGE );
+            findIndex = n.getTextComponent().getText().indexOf( findWord );
+        }
+        if ( findIndex != -1 )
+            selectFound();
+    }
+
+	
+    private void selectFound  () {
+        n.getTextComponent().grabFocus();
+        n.getTextComponent().select( findIndex, findIndex + findWord.length() );
+    }
+
+	
+    /**
+     *THIS FROM SUN WEBSITE (@Print.java)
+     *if we want to print the text, we can do this by print method
+     */
+    public void print  () {
+        //import printer class
+        Print.printComponent( n.getTextComponent() );
+    }
+
+	
+    public final void exit$$Base() {
+        System.exit( 0 );
     }
 
 	
