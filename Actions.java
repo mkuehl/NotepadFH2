@@ -419,6 +419,30 @@ class  Actions {
     }
 
 	
+    //to cut the selected text
+    public void cut  () {
+        n.getTextComponent().cut();
+    }
+
+	
+    //to copy the selected text
+    public void copy  () {
+        n.getTextComponent().copy();
+    }
+
+	
+    //to paste the selected text
+    public void paste  () {
+        n.getTextComponent().paste();
+    }
+
+	
+    //to select all the text
+    public void selectAll  () {
+        n.getTextComponent().selectAll();
+    }
+
+	
     //declaration of the private variables used in the program
     private String findWord  ;
 
@@ -472,32 +496,8 @@ class  Actions {
     }
 
 	
-    //to copy the selected text
-    public void copy() {
-        n.getTextComponent().copy();
-    }
-
-	
-    //to cut the selected text
-    public void cut() {
-        n.getTextComponent().cut();
-    }
-
-	
     public final void exit$$Base() {
         System.exit( 0 );
-    }
-
-	
-    //to paste the selected text
-    public void paste() {
-        n.getTextComponent().paste();
-    }
-
-	
-    //to select all the text
-    public void selectAll() {
-        n.getTextComponent().selectAll();
     }
 
 	
