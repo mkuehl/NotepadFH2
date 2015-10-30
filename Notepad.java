@@ -21,9 +21,9 @@ import java.awt.event.*;
 import javax.swing.*; 
 import javax.swing.event.*; 
 
-import javax.swing.text.*; 
-
 import javax.swing.undo.*; 
+
+import javax.swing.text.*; 
 
 public  
 
@@ -89,41 +89,11 @@ class  Notepad  extends JFrame {
 	}
 
 	
-	 private JMenu  buildEditMenu__wrappee__Clipboard  () {
-		JMenu editMenu = buildEditMenu__wrappee__Base();
+	 private JMenu  buildEditMenu__wrappee__Undo  () {
+		JMenu editMenu   = buildEditMenu__wrappee__Base();
 		if (editMenu.getItemCount() > 0) editMenu.addSeparator();
-		JMenuItem cutMenuItem  = new JMenuItem("Cut",  new ImageIcon(this.getClass().getResource("images/cut.gif")));
-		cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
-		cutMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.cut();
-			}
-		});
-		editMenu.add(cutMenuItem);
-		JMenuItem copyMenuItem = new JMenuItem("Copy", new ImageIcon(this.getClass().getResource("images/copy.gif")));
-		copyMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
-		copyMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.copy();
-			}
-		});
-		editMenu.add(copyMenuItem);
-		JMenuItem pasteMenuItem= new JMenuItem("Paste",new ImageIcon(this.getClass().getResource("images/paste.gif")));
-		pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
-		pasteMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.paste();
-			}
-		});
-		editMenu.add(pasteMenuItem);
-		JMenuItem selectAllMenuItem= new JMenuItem("Select All");
-		selectAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
-		selectAllMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.selectAll();
-			}
-		});
-		editMenu.add(selectAllMenuItem);
+		editMenu.add(undoAction);
+		editMenu.add(redoAction);
 		return editMenu;
 	}
 
@@ -179,39 +149,17 @@ class  Notepad  extends JFrame {
 	}
 
 	
-	 private JToolBar  buildToolBar__wrappee__Clipboard  () {
+	 private JToolBar  buildToolBar__wrappee__Undo  () {
 		JToolBar toolBar = buildToolBar__wrappee__Base();
 		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
-		JButton cutButton   = new JButton(new ImageIcon(this.getClass().getResource("images/cut.gif")));
-		cutButton.setToolTipText("Cut");
-		cutButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.cut();
-			}
-		});
-		toolBar.add(cutButton);
-		JButton copyButton  = new JButton(new ImageIcon(this.getClass().getResource("images/copy.gif")));
-		copyButton.setToolTipText("Copy");
-		copyButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.copy();
-			}
-		});
-		toolBar.add(copyButton);
-		JButton pasteButton = new JButton(new ImageIcon(this.getClass().getResource("images/paste.gif")));
-		pasteButton.setToolTipText("Paste");
-		pasteButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.paste();
-			}
-		});
-		toolBar.add(pasteButton);
+		toolBar.add(undoAction);
+		toolBar.add(redoAction);
 		return toolBar;
 	}
 
 	
 	 private JToolBar  buildToolBar__wrappee__Find  () {
-		JToolBar toolBar = buildToolBar__wrappee__Clipboard();
+		JToolBar toolBar = buildToolBar__wrappee__Undo();
 		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
 		JButton findButton  = new JButton(new ImageIcon(this.getClass().getResource("images/find.gif")));
 		findButton.setToolTipText("Find");
@@ -270,6 +218,15 @@ class  Notepad  extends JFrame {
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				actions.exit();
+			}
+		});
+	
+		getTextComponent().getDocument().addUndoableEditListener(new UndoableEditListener(){
+			public void undoableEditHappened(UndoableEditEvent e){
+				//Remember the edit and update the menus
+				undo.addEdit(e.getEdit());
+				undoAction.update();
+				redoAction.update();
 			}
 		});
 	
@@ -355,19 +312,19 @@ class  Notepad  extends JFrame {
     }
 
 	
+    //for using undo & redo
+    UndoManager undo  = new UndoManager();
+
+	
+    UndoAction undoAction  = new UndoAction( this );
+
+	
+    RedoAction redoAction  = new RedoAction( this );
+
+	
 	//declaration of the private variables used in the program
 	//create the text area
 	private JTextPane textPane  ;
-
-	
-    //for using undo & redo
-    UndoManager undo = new UndoManager();
-
-	
-    UndoAction undoAction = new UndoAction( this );
-
-	
-    RedoAction redoAction = new RedoAction( this );
 
 	
     protected final JMenu buildEditMenu$$Base() {
