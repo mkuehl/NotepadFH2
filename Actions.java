@@ -8,10 +8,9 @@ import java.awt.event.*;
 import javax.swing.*; 
 import javax.swing.filechooser.*; 
 
-/**
- *A PUBLIC CLASS FOR ACTIONS.JAVA
- */
-public   class  Actions {
+public  
+
+class  Actions {
 	
     Notepad n  ;
 
@@ -118,16 +117,6 @@ public   class  Actions {
      */
     public void about  () {
         JOptionPane.showMessageDialog( null, new About(),"About Notepad",JOptionPane.PLAIN_MESSAGE );
-    }
-
-	
-    /**
-     *THIS FROM SUN WEBSITE (@Print.java)
-     *if we want to print the text, we can do this by print method
-     */
-    public void print  () {
-        //import printer class
-        Print.printComponent( n.getTextComponent() );
     }
 
 	
@@ -415,6 +404,16 @@ public   class  Actions {
 
 	
     /**
+     *THIS FROM SUN WEBSITE (@Print.java)
+     *if we want to print the text, we can do this by print method
+     */
+    public void print() {
+        //import printer class
+        Print.printComponent( n.getTextComponent() );
+    }
+
+	
+    /**
      *THIS IS FOR SAVE ACTION, SaveAs ACTION has saveAs() method
      *If we want to save a new text, then we want to know 
      *if the text was saved befor or not.
@@ -490,10 +489,11 @@ public   class  Actions {
     }
 
 	
-    //for wraping the line & wraping the style word
-    public void setStyle( String style ) {
-        n.getTextPane().setCharacterAttributes( n.getTextPane().getStyledDocument().getStyle( style ), true );
-    }
+	//for wraping the line & wraping the style word
+	public void setStyle  (String style) {
+		n.getTextPane().setCharacterAttributes(
+			n.getTextPane().getStyledDocument().getStyle(style), true);
+	}
 
 
 }
