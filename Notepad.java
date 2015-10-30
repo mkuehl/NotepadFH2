@@ -113,11 +113,9 @@ class  Notepad  extends JFrame {
 		});
 	
 		Container cp = getContentPane();
-		textArea = new JTextArea();
-		textArea.setLineWrap(false);
-		textArea.setWrapStyleWord(false);
-		cp.add(textArea);
-		cp.add(new JScrollPane(textArea));
+		textPane = new JTextPane();
+		cp.add(textPane);
+		cp.add(new JScrollPane(textPane));
 	}
 
 	
@@ -129,16 +127,16 @@ class  Notepad  extends JFrame {
 	
 	//declaration of the private variables used in the program
 	//create the text area
-	private JTextArea textArea;
+	private JTextPane textPane;
 
 	
-	public JTextArea getTextArea() {
-		return textArea;
+	public JTextPane getTextPane() {
+		return textPane;
 	}
 
 	
 	public JTextComponent getTextComponent() {
-		return textArea;
+		return textPane;
 	}
 
 
