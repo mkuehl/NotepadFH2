@@ -21,9 +21,9 @@ import java.awt.event.*;
 import javax.swing.*; 
 import javax.swing.event.*; 
 
-import javax.swing.undo.*; 
-
 import javax.swing.text.*; 
+
+import javax.swing.undo.*; 
 
 public  
 
@@ -66,44 +66,6 @@ class  Notepad  extends JFrame {
 	}
 
 	
-	 private JMenu  buildFileMenu__wrappee__File  () {
-		JMenu fileMenu   = buildFileMenu__wrappee__Base();
-		if (fileMenu.getItemCount() > 0) fileMenu.addSeparator();
-		JMenuItem newFileMenuItem    = new JMenuItem("New", new ImageIcon(this.getClass().getResource("images/new.gif")));
-		newFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
-		newFileMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.newFile();
-			}
-		});
-		fileMenu.add(newFileMenuItem);
-		JMenuItem openMenuItem   = new JMenuItem("Open", new ImageIcon(this.getClass().getResource("images/open.gif")));
-		openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-		openMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.open();
-			}
-		});
-		fileMenu.add(openMenuItem);
-		JMenuItem saveMenuItem   = new JMenuItem("Save", new ImageIcon(this.getClass().getResource("images/save.gif")));
-		saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-		saveMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.save();
-			}
-		});
-		fileMenu.add(saveMenuItem);
-		JMenuItem saveAsMenuItem = new JMenuItem("Save As", new ImageIcon(this.getClass().getResource("images/saveAs.gif")));
-		saveAsMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.saveAs();
-			}
-		});
-		fileMenu.add(saveAsMenuItem);
-		return fileMenu;
-	}
-
-	
     protected JMenu buildFileMenu  () {
         JMenu fileMenu   = buildFileMenu$$File();
         if ( fileMenu.getItemCount() > 0 )
@@ -127,17 +89,8 @@ class  Notepad  extends JFrame {
 	}
 
 	
-	 private JMenu  buildEditMenu__wrappee__Undo  () {
-		JMenu editMenu   = buildEditMenu__wrappee__Base();
-		if (editMenu.getItemCount() > 0) editMenu.addSeparator();
-		editMenu.add(undoAction);
-		editMenu.add(redoAction);
-		return editMenu;
-	}
-
-	
 	 private JMenu  buildEditMenu__wrappee__Clipboard  () {
-		JMenu editMenu = buildEditMenu__wrappee__Undo();
+		JMenu editMenu = buildEditMenu__wrappee__Base();
 		if (editMenu.getItemCount() > 0) editMenu.addSeparator();
 		JMenuItem cutMenuItem  = new JMenuItem("Cut",  new ImageIcon(this.getClass().getResource("images/cut.gif")));
 		cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
@@ -226,56 +179,8 @@ class  Notepad  extends JFrame {
 	}
 
 	
-	 private JToolBar  buildToolBar__wrappee__File  () {
-		JToolBar toolBar = buildToolBar__wrappee__Base();
-		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
-		JButton newButton   = new JButton(new ImageIcon(this.getClass().getResource("images/new.gif")));
-		newButton.setToolTipText("New");
-		newButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.newFile();
-			}
-		});
-		toolBar.add(newButton);
-		JButton openButton  = new JButton(new ImageIcon(this.getClass().getResource("images/open.gif")));
-		openButton.setToolTipText("Open");
-		openButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.open();
-			}
-		});
-		toolBar.add(openButton);
-		JButton saveButton  = new JButton(new ImageIcon(this.getClass().getResource("images/save.gif")));
-		saveButton.setToolTipText("Save");
-		saveButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.save();
-			}
-		});
-		toolBar.add(saveButton);
-		JButton saveAsButton= new JButton(new ImageIcon(this.getClass().getResource("images/saveAs.gif")));
-		saveAsButton.setToolTipText("Save As");
-		saveAsButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				actions.saveAs();
-			}
-		});
-		toolBar.add(saveAsButton);
-		return toolBar;
-	}
-
-	
-	 private JToolBar  buildToolBar__wrappee__Undo  () {
-		JToolBar toolBar = buildToolBar__wrappee__File();
-		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
-		toolBar.add(undoAction);
-		toolBar.add(redoAction);
-		return toolBar;
-	}
-
-	
 	 private JToolBar  buildToolBar__wrappee__Clipboard  () {
-		JToolBar toolBar = buildToolBar__wrappee__Undo();
+		JToolBar toolBar = buildToolBar__wrappee__Base();
 		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
 		JButton cutButton   = new JButton(new ImageIcon(this.getClass().getResource("images/cut.gif")));
 		cutButton.setToolTipText("Cut");
@@ -368,14 +273,8 @@ class  Notepad  extends JFrame {
 			}
 		});
 	
-		getTextComponent().getDocument().addUndoableEditListener(new UndoableEditListener(){
-			public void undoableEditHappened(UndoableEditEvent e){
-				//Remember the edit and update the menus
-				undo.addEdit(e.getEdit());
-				undoAction.update();
-				redoAction.update();
-			}
-		});
+		//get the graphical user interface components display area
+		setJMenuBar(buildMenuBar());
 	
                 super(); {
                  {
@@ -459,19 +358,19 @@ class  Notepad  extends JFrame {
     }
 
 	
-    //for using undo & redo
-    UndoManager undo  = new UndoManager();
-
-	
-    UndoAction undoAction  = new UndoAction( this );
-
-	
-    RedoAction redoAction  = new RedoAction( this );
-
-	
 	//declaration of the private variables used in the program
 	//create the text area
 	private JTextPane textPane  ;
+
+	
+    //for using undo & redo
+    UndoManager undo = new UndoManager();
+
+	
+    UndoAction undoAction = new UndoAction( this );
+
+	
+    RedoAction redoAction = new RedoAction( this );
 
 	
     protected final JMenu buildEditMenu$$Base() {

@@ -10,17 +10,11 @@ import javax.swing.undo.*;
 
 class  UndoAction  extends AbstractAction {
 	
-    Notepad notepad  ;
+    Notepad notepad;
 
 	
 
-    public UndoAction  (Notepad notepad){
-		super( "Undo" );
-		putValue( Action.SMALL_ICON,
-			new ImageIcon( this.getClass().getResource( "images/undo.gif" ) ) );
-		setEnabled( false );
-		this.notepad = notepad;
-	
+    public UndoAction( Notepad notepad ){
                 super( "Undo" );
         putValue( Action.SMALL_ICON,
                         new ImageIcon( this.getClass().getResource( "images/undo.gif" ) ) );
@@ -29,7 +23,7 @@ class  UndoAction  extends AbstractAction {
     }
 
 	
-    public void actionPerformed  ( ActionEvent e ) {
+    public void actionPerformed( ActionEvent e ) {
         try {
             notepad.undo.undo();
         }
@@ -42,7 +36,7 @@ class  UndoAction  extends AbstractAction {
     }
 
 	
-    protected void update  () {
+    protected void update() {
         if( notepad.undo.canUndo() ) {
             setEnabled( true );
             putValue( "Undo", notepad.undo.getUndoPresentationName() );
