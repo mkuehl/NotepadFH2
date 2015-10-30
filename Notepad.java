@@ -155,7 +155,7 @@ class  Notepad  extends JFrame {
 	}
 
 	
-    protected JToolBar buildToolBar  () {
+     private JToolBar  buildToolBar__wrappee__FullStyled  () {
         JToolBar toolBar = buildToolBar$$FormatRaw();
         if ( toolBar.getComponentCount() > 0 )
             toolBar.addSeparator();
@@ -169,6 +169,21 @@ class  Notepad  extends JFrame {
         toolBar.add( printButton );
         return toolBar;
     }
+
+	
+	protected JToolBar buildToolBar() {
+		JToolBar toolBar = buildToolBar__wrappee__FullStyled();
+		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
+		String styles[] = {"regular", "bold", "italic"};
+		final JComboBox styleBox = new JComboBox(styles);
+		styleBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				actions.setStyle(String.valueOf(styleBox.getSelectedItem()));
+			}
+		});
+		toolBar.add(styleBox);
+		return toolBar;
+	}
 
 	
 	public Notepad  () {
@@ -249,6 +264,14 @@ class  Notepad  extends JFrame {
             StyleConstants.setBold( bold, true );
         }
     
+		StyledDocument doc = getTextPane().getStyledDocument();
+		Style regular = doc.addStyle("regular", 
+			StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE));
+		Style italic = doc.addStyle("italic", regular);
+		StyleConstants.setItalic(italic, true);
+		Style bold = doc.addStyle("bold", regular);
+		StyleConstants.setBold(bold, true);
+	
 		Container cp = getContentPane();
 		textPane = new JTextPane();
 		cp.add(textPane);

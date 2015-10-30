@@ -8,10 +8,9 @@ import java.awt.event.*;
 import javax.swing.*; 
 import javax.swing.filechooser.*; 
 
-/**
- *A PUBLIC CLASS FOR ACTIONS.JAVA
- */
-public   class  Actions {
+public  
+
+class  Actions {
 	
     Notepad n  ;
 
@@ -490,10 +489,11 @@ public   class  Actions {
     }
 
 	
-    //for wraping the line & wraping the style word
-    public void setStyle( String style ) {
-        n.getTextPane().setCharacterAttributes( n.getTextPane().getStyledDocument().getStyle( style ), true );
-    }
+	//for wraping the line & wraping the style word
+	public void setStyle  (String style) {
+		n.getTextPane().setCharacterAttributes(
+			n.getTextPane().getStyledDocument().getStyle(style), true);
+	}
 
 
 }
