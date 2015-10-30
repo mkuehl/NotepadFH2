@@ -10,11 +10,17 @@ import javax.swing.undo.*;
 
 class  RedoAction  extends AbstractAction {
 	
-    Notepad notepad;
+    Notepad notepad  ;
 
 	
 
-    public RedoAction( Notepad notepad ){
+    public RedoAction  (Notepad notepad){
+		super("Redo");
+		putValue( Action.SMALL_ICON, 
+			new ImageIcon(this.getClass().getResource("images/redo.gif")));
+		setEnabled(false);
+		this.notepad = notepad;
+	
                 super( "Redo" );
         putValue( Action.SMALL_ICON, 
                         new ImageIcon( this.getClass().getResource( "images/redo.gif" ) ) );
@@ -23,7 +29,7 @@ class  RedoAction  extends AbstractAction {
     }
 
 	
-    public void actionPerformed( ActionEvent e ) {
+    public void actionPerformed  ( ActionEvent e ) {
         try {
             notepad.undo.redo();
         }
@@ -36,7 +42,7 @@ class  RedoAction  extends AbstractAction {
     }
 
 	
-    protected void update() {
+    protected void update  () {
         if( notepad.undo.canRedo() ) {
             setEnabled( true );
             putValue( "Redo", notepad.undo.getRedoPresentationName() );

@@ -21,9 +21,9 @@ import java.awt.event.*;
 import javax.swing.*; 
 import javax.swing.event.*; 
 
-import javax.swing.text.*; 
-
 import javax.swing.undo.*; 
+
+import javax.swing.text.*; 
 
 public  
 
@@ -89,8 +89,17 @@ class  Notepad  extends JFrame {
 	}
 
 	
+	 private JMenu  buildEditMenu__wrappee__Undo  () {
+		JMenu editMenu   = buildEditMenu__wrappee__Base();
+		if (editMenu.getItemCount() > 0) editMenu.addSeparator();
+		editMenu.add(undoAction);
+		editMenu.add(redoAction);
+		return editMenu;
+	}
+
+	
 	 private JMenu  buildEditMenu__wrappee__Clipboard  () {
-		JMenu editMenu = buildEditMenu__wrappee__Base();
+		JMenu editMenu = buildEditMenu__wrappee__Undo();
 		if (editMenu.getItemCount() > 0) editMenu.addSeparator();
 		JMenuItem cutMenuItem  = new JMenuItem("Cut",  new ImageIcon(this.getClass().getResource("images/cut.gif")));
 		cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
@@ -179,8 +188,17 @@ class  Notepad  extends JFrame {
 	}
 
 	
-	 private JToolBar  buildToolBar__wrappee__Clipboard  () {
+	 private JToolBar  buildToolBar__wrappee__Undo  () {
 		JToolBar toolBar = buildToolBar__wrappee__Base();
+		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
+		toolBar.add(undoAction);
+		toolBar.add(redoAction);
+		return toolBar;
+	}
+
+	
+	 private JToolBar  buildToolBar__wrappee__Clipboard  () {
+		JToolBar toolBar = buildToolBar__wrappee__Undo();
 		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
 		JButton cutButton   = new JButton(new ImageIcon(this.getClass().getResource("images/cut.gif")));
 		cutButton.setToolTipText("Cut");
@@ -276,6 +294,15 @@ class  Notepad  extends JFrame {
 		//get the graphical user interface components display area
 		setJMenuBar(buildMenuBar());
 	
+		getTextComponent().getDocument().addUndoableEditListener(new UndoableEditListener(){
+			public void undoableEditHappened(UndoableEditEvent e){
+				//Remember the edit and update the menus
+				undo.addEdit(e.getEdit());
+				undoAction.update();
+				redoAction.update();
+			}
+		});
+	
                 super(); {
                  {
                  {
@@ -358,19 +385,19 @@ class  Notepad  extends JFrame {
     }
 
 	
+    //for using undo & redo
+    UndoManager undo  = new UndoManager();
+
+	
+    UndoAction undoAction  = new UndoAction( this );
+
+	
+    RedoAction redoAction  = new RedoAction( this );
+
+	
 	//declaration of the private variables used in the program
 	//create the text area
 	private JTextPane textPane  ;
-
-	
-    //for using undo & redo
-    UndoManager undo = new UndoManager();
-
-	
-    UndoAction undoAction = new UndoAction( this );
-
-	
-    RedoAction redoAction = new RedoAction( this );
 
 	
     protected final JMenu buildEditMenu$$Base() {
