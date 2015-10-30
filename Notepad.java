@@ -89,6 +89,45 @@ class  Notepad  extends JFrame {
 	}
 
 	
+	 private JMenu  buildEditMenu__wrappee__Clipboard  () {
+		JMenu editMenu = buildEditMenu__wrappee__Base();
+		if (editMenu.getItemCount() > 0) editMenu.addSeparator();
+		JMenuItem cutMenuItem  = new JMenuItem("Cut",  new ImageIcon(this.getClass().getResource("images/cut.gif")));
+		cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+		cutMenuItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				actions.cut();
+			}
+		});
+		editMenu.add(cutMenuItem);
+		JMenuItem copyMenuItem = new JMenuItem("Copy", new ImageIcon(this.getClass().getResource("images/copy.gif")));
+		copyMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+		copyMenuItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				actions.copy();
+			}
+		});
+		editMenu.add(copyMenuItem);
+		JMenuItem pasteMenuItem= new JMenuItem("Paste",new ImageIcon(this.getClass().getResource("images/paste.gif")));
+		pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+		pasteMenuItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				actions.paste();
+			}
+		});
+		editMenu.add(pasteMenuItem);
+		JMenuItem selectAllMenuItem= new JMenuItem("Select All");
+		selectAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+		selectAllMenuItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				actions.selectAll();
+			}
+		});
+		editMenu.add(selectAllMenuItem);
+		return editMenu;
+	}
+
+	
     protected JMenu buildEditMenu  () {
         JMenu editMenu   = buildEditMenu$$Clipboard();
         if ( editMenu.getItemCount() > 0 )
@@ -167,6 +206,21 @@ class  Notepad  extends JFrame {
 			}
 		});
 		toolBar.add(pasteButton);
+		return toolBar;
+	}
+
+	
+	 private JToolBar  buildToolBar__wrappee__Find  () {
+		JToolBar toolBar = buildToolBar__wrappee__Clipboard();
+		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
+		JButton findButton  = new JButton(new ImageIcon(this.getClass().getResource("images/find.gif")));
+		findButton.setToolTipText("Find");
+		findButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				actions.find();
+			}
+		});
+		toolBar.add(findButton);
 		return toolBar;
 	}
 
