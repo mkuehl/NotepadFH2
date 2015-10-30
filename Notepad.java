@@ -82,6 +82,13 @@ class  Notepad  extends JFrame {
     }
 
 	
+	 private JMenu  buildEditMenu__wrappee__Base  () {
+		JMenu editMenu   = new JMenu("Edit");
+		editMenu.setMnemonic('e');
+		return editMenu;
+	}
+
+	
     protected JMenu buildEditMenu  () {
         JMenu editMenu   = buildEditMenu$$Clipboard();
         if ( editMenu.getItemCount() > 0 )
@@ -133,7 +140,22 @@ class  Notepad  extends JFrame {
 	}
 
 	
-     private JToolBar  buildToolBar__wrappee__FullStyled  () {
+	 private JToolBar  buildToolBar__wrappee__Find  () {
+		JToolBar toolBar = buildToolBar__wrappee__Base();
+		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
+		JButton findButton  = new JButton(new ImageIcon(this.getClass().getResource("images/find.gif")));
+		findButton.setToolTipText("Find");
+		findButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				actions.find();
+			}
+		});
+		toolBar.add(findButton);
+		return toolBar;
+	}
+
+	
+    protected JToolBar buildToolBar  () {
         JToolBar toolBar = buildToolBar$$FormatRaw();
         if ( toolBar.getComponentCount() > 0 )
             toolBar.addSeparator();
@@ -147,21 +169,6 @@ class  Notepad  extends JFrame {
         toolBar.add( printButton );
         return toolBar;
     }
-
-	
-	protected JToolBar buildToolBar() {
-		JToolBar toolBar = buildToolBar__wrappee__FullStyled();
-		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
-		String styles[] = {"regular", "bold", "italic"};
-		final JComboBox styleBox = new JComboBox(styles);
-		styleBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				actions.setStyle(String.valueOf(styleBox.getSelectedItem()));
-			}
-		});
-		toolBar.add(styleBox);
-		return toolBar;
-	}
 
 	
 	public Notepad  () {
@@ -242,14 +249,6 @@ class  Notepad  extends JFrame {
             StyleConstants.setBold( bold, true );
         }
     
-		StyledDocument doc = getTextPane().getStyledDocument();
-		Style regular = doc.addStyle("regular", 
-			StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE));
-		Style italic = doc.addStyle("italic", regular);
-		StyleConstants.setItalic(italic, true);
-		Style bold = doc.addStyle("bold", regular);
-		StyleConstants.setBold(bold, true);
-	
 		Container cp = getContentPane();
 		textPane = new JTextPane();
 		cp.add(textPane);
