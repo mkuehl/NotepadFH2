@@ -140,17 +140,33 @@ class  Notepad  extends JFrame {
 	}
 
 	
-	 private JToolBar  buildToolBar__wrappee__Find  () {
+	 private JToolBar  buildToolBar__wrappee__Clipboard  () {
 		JToolBar toolBar = buildToolBar__wrappee__Base();
 		if (toolBar.getComponentCount() > 0) toolBar.addSeparator();
-		JButton findButton  = new JButton(new ImageIcon(this.getClass().getResource("images/find.gif")));
-		findButton.setToolTipText("Find");
-		findButton.addActionListener(new ActionListener(){
+		JButton cutButton   = new JButton(new ImageIcon(this.getClass().getResource("images/cut.gif")));
+		cutButton.setToolTipText("Cut");
+		cutButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae){
-				actions.find();
+				actions.cut();
 			}
 		});
-		toolBar.add(findButton);
+		toolBar.add(cutButton);
+		JButton copyButton  = new JButton(new ImageIcon(this.getClass().getResource("images/copy.gif")));
+		copyButton.setToolTipText("Copy");
+		copyButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				actions.copy();
+			}
+		});
+		toolBar.add(copyButton);
+		JButton pasteButton = new JButton(new ImageIcon(this.getClass().getResource("images/paste.gif")));
+		pasteButton.setToolTipText("Paste");
+		pasteButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				actions.paste();
+			}
+		});
+		toolBar.add(pasteButton);
 		return toolBar;
 	}
 

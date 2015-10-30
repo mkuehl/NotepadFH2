@@ -120,46 +120,27 @@ class  Actions {
     }
 
 	
-    //declaration of the private variables used in the program
-    private String findWord  ;
-
-	 //for searching & finding the word
-    private int findIndex  = -1;
-
-	
-    //this is a method for searching the input text from the text area
-    public void find  () {
-        try {
-            int index;
-            findWord = JOptionPane.showInputDialog( "Type the word to find" );
-            findIndex = n.getTextComponent().getText().indexOf( findWord );
-            if ( findIndex == -1 ) {
-                JOptionPane.showMessageDialog( null,"Word not found!","No match",JOptionPane.WARNING_MESSAGE );
-            }
-            else {
-                selectFound();
-            }
-        }
-        catch ( Exception ex ) {}
+    //to cut the selected text
+    public void cut  () {
+        n.getTextComponent().cut();
     }
 
 	
-    public void findNext  () {
-        if ( findIndex == -1 )
-            return;
-        findIndex = n.getTextComponent().getText().indexOf( findWord, findIndex+1 );
-        if ( findIndex == -1 ) {
-            JOptionPane.showMessageDialog( null,"Search wrapped!","Search wrapped",JOptionPane.WARNING_MESSAGE );
-            findIndex = n.getTextComponent().getText().indexOf( findWord );
-        }
-        if ( findIndex != -1 )
-            selectFound();
+    //to copy the selected text
+    public void copy  () {
+        n.getTextComponent().copy();
     }
 
 	
-    private void selectFound  () {
-        n.getTextComponent().grabFocus();
-        n.getTextComponent().select( findIndex, findIndex + findWord.length() );
+    //to paste the selected text
+    public void paste  () {
+        n.getTextComponent().paste();
+    }
+
+	
+    //to select all the text
+    public void selectAll  () {
+        n.getTextComponent().selectAll();
     }
 
 	
@@ -183,6 +164,13 @@ class  Actions {
 
 	 //for using a open & save dialog
     private ExampleFileFilter filter = new ExampleFileFilter();
+
+	
+    //declaration of the private variables used in the program
+    private String findWord;
+
+	 //for searching & finding the word
+    private int findIndex = -1;
 
 	
     /**
@@ -244,20 +232,38 @@ class  Actions {
     }
 
 	
-    //to copy the selected text
-    public void copy() {
-        n.getTextComponent().copy();
-    }
-
-	
-    //to cut the selected text
-    public void cut() {
-        n.getTextComponent().cut();
-    }
-
-	
     public final void exit$$Base() {
         System.exit( 0 );
+    }
+
+	
+    //this is a method for searching the input text from the text area
+    public void find() {
+        try {
+            int index;
+            findWord = JOptionPane.showInputDialog( "Type the word to find" );
+            findIndex = n.getTextComponent().getText().indexOf( findWord );
+            if ( findIndex == -1 ) {
+                JOptionPane.showMessageDialog( null,"Word not found!","No match",JOptionPane.WARNING_MESSAGE );
+            }
+            else {
+                selectFound();
+            }
+        }
+        catch ( Exception ex ) {}
+    }
+
+	
+    public void findNext() {
+        if ( findIndex == -1 )
+            return;
+        findIndex = n.getTextComponent().getText().indexOf( findWord, findIndex+1 );
+        if ( findIndex == -1 ) {
+            JOptionPane.showMessageDialog( null,"Search wrapped!","Search wrapped",JOptionPane.WARNING_MESSAGE );
+            findIndex = n.getTextComponent().getText().indexOf( findWord );
+        }
+        if ( findIndex != -1 )
+            selectFound();
     }
 
 	
@@ -413,12 +419,6 @@ class  Actions {
     }
 
 	
-    //to paste the selected text
-    public void paste() {
-        n.getTextComponent().paste();
-    }
-
-	
     /**
      *THIS IS FOR SAVE ACTION, SaveAs ACTION has saveAs() method
      *If we want to save a new text, then we want to know 
@@ -483,9 +483,9 @@ class  Actions {
     }
 
 	
-    //to select all the text
-    public void selectAll() {
-        n.getTextComponent().selectAll();
+    private void selectFound() {
+        n.getTextComponent().grabFocus();
+        n.getTextComponent().select( findIndex, findIndex + findWord.length() );
     }
 
 	
