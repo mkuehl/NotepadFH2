@@ -25,10 +25,9 @@ import javax.swing.text.*;
 
 import javax.swing.undo.*; 
 
-/**
- *A PUBLIC CLASS FOR NOTEPAD.JAVA
- */
-public   class  Notepad  extends JFrame {
+public  
+
+class  Notepad  extends JFrame {
 	
     //for using the methods in these classes
     public Actions actions  = new Actions( this );
@@ -137,8 +136,7 @@ public   class  Notepad  extends JFrame {
     }
 
 	
-    //Constructor of Notepad
-    public Notepad  () {
+	public Notepad  () {
 		super();
 		//set the title for Notepad and set the size for it.
 		setTitle("Untitled - JAVA Notepad");
@@ -154,13 +152,6 @@ public   class  Notepad  extends JFrame {
 				actions.exit();
 			}
 		});
-	
-		Container cp = getContentPane();
-		textArea = new JTextArea();
-		textArea.setLineWrap(false);
-		textArea.setWrapStyleWord(false);
-		cp.add(textArea);
-		cp.add(new JScrollPane(textArea));
 	
                 super(); {
                  {
@@ -222,7 +213,12 @@ public   class  Notepad  extends JFrame {
             Style bold = doc.addStyle( "bold", regular );
             StyleConstants.setBold( bold, true );
         }
-    }
+    
+		Container cp = getContentPane();
+		textPane = new JTextPane();
+		cp.add(textPane);
+		cp.add(new JScrollPane(textPane));
+	}
 
 	
     //Main Method
@@ -233,22 +229,7 @@ public   class  Notepad  extends JFrame {
 	
 	//declaration of the private variables used in the program
 	//create the text area
-	private JTextArea textArea;
-
-	
-	public JTextArea getTextArea() {
-		return textArea;
-	}
-
-	
-    public JTextComponent getTextComponent  () {
-        return textPane;
-    }
-
-	
-    //declaration of the private variables used in the program
-    //create the text area
-    private JTextPane textPane;
+	private JTextPane textPane  ;
 
 	
     //for using undo & redo
@@ -484,9 +465,14 @@ public   class  Notepad  extends JFrame {
     }
 
 	
-    public JTextPane getTextPane() {
-        return textPane;
-    }
+	public JTextComponent getTextComponent  () {
+		return textPane;
+	}
+
+	
+	public JTextPane getTextPane  () {
+		return textPane;
+	}
 
 
 }
